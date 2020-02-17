@@ -29,22 +29,6 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        gurusExample();
-
-        Publisher nyt = new Publisher("New Yourk Times");
-        Address mainAddress = new Address("1", "NY", "NYS", "010028", nyt);
-        Address address = new Address("2", "CA", "CAS", "010040", nyt);
-        nyt.getAddress().add(mainAddress);
-        nyt.getAddress().add(address);
-
-        publisherRepository.save(nyt);
-        addressRepository.save(mainAddress);
-        addressRepository.save(address);
-        System.out.println("Count of publishers:" + publisherRepository.count());
-        System.out.println("Count of address:" + addressRepository.count());
-    }
-
-    private void gurusExample() {
         Author eric = new Author("Eric", "Evans");
         Book tdd = new Book("TDD", "123123");
         eric.getBooks().add(tdd);
@@ -58,13 +42,36 @@ public class BootStrapData implements CommandLineRunner {
         rod.getBooks().add(noEJB);
         noEJB.getAuthors().add(rod);
 
-
         authorRepository.save(rod);
         bookRepository.save(noEJB);
 
-        System.out.println("Start in Bootstrap");
-        System.out.println("CountOfBooks:" + bookRepository.count());
-    }
+        Publisher nyt = new Publisher("New Yourk Times");
+        Address mainAddress = new Address("1", "NY", "NYS", "010028", null);
+        Address address = new Address("2", "CA", "CAS", "010040", null);
+        addressRepository.save(mainAddress);
+        addressRepository.save(address);
 
+
+        nyt.getAddress().add(mainAddress);
+        nyt.getAddress().add(address);
+
+        publisherRepository.save(nyt);
+
+        noEJB.setPublisher(nyt);
+        tdd.setPublisher(nyt);
+        nyt.getBooks().add(noEJB);
+        nyt.getBooks().add(tdd);
+
+
+        bookRepository.save(noEJB);
+
+        System.out.println("Start in Bootstrap");
+
+        System.out.println("Count of publishers:" + publisherRepository.count());
+        System.out.println("Count of address:" + addressRepository.count());
+        System.out.println("CountOfBooks:" + bookRepository.count());
+        System.out.println("Count of books:" + nyt.getBooks().size());
+
+    }
 
 }
