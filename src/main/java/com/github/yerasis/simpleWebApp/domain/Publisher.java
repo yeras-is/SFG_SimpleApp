@@ -57,14 +57,14 @@ public class Publisher {
         this.address = address;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return "Publisher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address=" + address +
                 '}';
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
